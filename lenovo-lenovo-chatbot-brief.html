@@ -112,6 +112,33 @@
         font-size: 1.1rem;
       }
 
+      .checklist-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+        gap: 1rem;
+      }
+
+      .check-card {
+        background: var(--card);
+        border-radius: 18px;
+        border: 1px solid var(--border);
+        padding: 1rem;
+        box-shadow: 0 12px 28px rgba(15, 23, 42, 0.08);
+        display: flex;
+        flex-direction: column;
+        gap: 0.35rem;
+      }
+
+      .check-card ul {
+        margin: 0.5rem 0 0;
+        padding-left: 1.15rem;
+        color: var(--muted);
+      }
+
+      .check-card li {
+        margin-bottom: 0.2rem;
+      }
+
       .card-grid {
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -325,6 +352,44 @@
           <h3>Key Metric</h3>
           <p>+25% CSAT lift on warranty &amp; order-status chats</p>
         </article>
+      </section>
+
+      <section aria-labelledby="customization">
+        <h2 id="customization">Customization checklist (quick view)</h2>
+        <p>
+          Capture these before running Promptfoo so Lenovo engineering, product,
+          and research managers stay aligned during triage and governance syncs.
+        </p>
+        <div class="checklist-grid">
+          <article class="check-card card required">
+            <span class="tag">Required</span>
+            <h3>Core definition</h3>
+            <ul>
+              <li>10-word description with Lenovo KPI framing</li>
+              <li>Generator engine + model version + compliance region</li>
+              <li>Target provider (runtime or fallback inference)</li>
+              <li>Purpose statement listing banned outcomes</li>
+            </ul>
+          </article>
+          <article class="check-card card required">
+            <span class="tag">Required</span>
+            <h3>Policy &amp; context</h3>
+            <ul>
+              <li>Entities (warranty tiers, SKU maps, personas)</li>
+              <li>Policy guardrails for pricing, competitors, IP</li>
+              <li>Evaluation cadence + success thresholds</li>
+            </ul>
+          </article>
+          <article class="check-card card optional">
+            <span class="tag">Optional</span>
+            <h3>Experience enrichments</h3>
+            <ul>
+              <li>Application micro-pages &amp; escalation dialogs</li>
+              <li>Plugins/connectors &amp; Lenovo ID scopes</li>
+              <li>Intent catalog, multi-turn choreography, custom evaluators</li>
+            </ul>
+          </article>
+        </div>
       </section>
 
       <section aria-labelledby="required-inputs">
