@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, viewport-fit=cover"
+    />
+    <title>Lenovo Customer Service Chatbot · Promptfoo Control Sheet</title>
+    <style>
+      :root {
+        color-scheme: light;
+        font-size: 16px;
+        --bg: #f6f7fb;
+        --card: #ffffff;
+        --ink: #0f172a;
+        --muted: #475569;
+        --border: #dbe2f0;
+        --accent: #da1e28;
+        --accent-soft: rgba(218, 30, 40, 0.12);
+        --required: #14532d;
+        --optional: #1d4ed8;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        font-family: "Inter", "Segoe UI", system-ui, -apple-system, sans-serif;
+        line-height: 1.6;
+        background: var(--bg);
+        color: var(--ink);
+      }
+
+      main {
+        max-width: 1100px;
+        margin: 0 auto;
+        padding: 1.25rem clamp(1rem, 3vw, 2.5rem) 3rem;
+      }
+
+      .hero {
+        background: linear-gradient(135deg, #1b1f3b, #3c4e91);
+        color: #fff;
+        border-radius: 24px;
+        padding: clamp(1.5rem, 3vw, 2.5rem);
+        margin-bottom: 1.5rem;
+        box-shadow: 0 25px 50px rgba(30, 41, 59, 0.25);
+      }
+
+      .hero h1 {
+        margin: 0 0 0.5rem;
+        font-size: clamp(1.75rem, 5vw, 2.75rem);
+      }
+
+      .hero p {
+        margin: 0;
+        max-width: 640px;
+        color: rgba(255, 255, 255, 0.92);
+      }
+
+      .chips {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.6rem;
+        margin-top: 1rem;
+      }
+
+      .chip {
+        border-radius: 999px;
+        padding: 0.35rem 0.9rem;
+        font-size: 0.9rem;
+        background: rgba(255, 255, 255, 0.18);
+        border: 1px solid rgba(255, 255, 255, 0.25);
+      }
+
+      section {
+        margin-bottom: 1.75rem;
+      }
+
+      h2 {
+        margin: 0 0 0.75rem;
+        font-size: 1.35rem;
+      }
+
+      .info-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 1rem;
+      }
+
+      .info-card {
+        background: var(--card);
+        border-radius: 18px;
+        border: 1px solid var(--border);
+        padding: 1rem;
+        box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+      }
+
+      .info-card h3 {
+        margin: 0 0 0.15rem;
+        font-size: 1rem;
+        color: var(--muted);
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+      }
+
+      .info-card p {
+        margin: 0;
+        font-weight: 600;
+        font-size: 1.1rem;
+      }
+
+      .card-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 1rem;
+      }
+
+      .card {
+        background: var(--card);
+        border-radius: 18px;
+        border: 1px solid var(--border);
+        padding: 1rem;
+        display: flex;
+        flex-direction: column;
+        gap: 0.75rem;
+        min-height: 260px;
+        box-shadow: 0 15px 35px rgba(15, 23, 42, 0.08);
+      }
+
+      .card-head {
+        display: flex;
+        flex-direction: column;
+        gap: 0.35rem;
+      }
+
+      .tag {
+        align-self: flex-start;
+        font-size: 0.75rem;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        padding: 0.2rem 0.65rem;
+        border-radius: 999px;
+        border: 1px solid;
+      }
+
+      .card.required .tag {
+        color: var(--required);
+        border-color: rgba(20, 83, 45, 0.45);
+        background: rgba(20, 83, 45, 0.08);
+      }
+
+      .card.optional .tag {
+        color: var(--optional);
+        border-color: rgba(29, 78, 216, 0.4);
+        background: rgba(29, 78, 216, 0.08);
+      }
+
+      label {
+        font-size: 0.85rem;
+        font-weight: 600;
+        color: var(--muted);
+      }
+
+      textarea,
+      input {
+        width: 100%;
+        border-radius: 12px;
+        border: 1px solid var(--border);
+        padding: 0.65rem 0.85rem;
+        font: inherit;
+        background: #fdfdff;
+        min-height: 70px;
+        resize: vertical;
+      }
+
+      textarea:focus,
+      input:focus {
+        outline: 2px solid var(--accent);
+        outline-offset: 2px;
+      }
+
+      ul {
+        margin: 0;
+        padding-left: 1.2rem;
+      }
+
+      .policy-list li {
+        margin-bottom: 0.35rem;
+      }
+
+      .timeline {
+        border-left: 3px solid var(--border);
+        padding-left: 1.5rem;
+        margin-left: 0.25rem;
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+      }
+
+      .timeline-step {
+        background: var(--card);
+        border-radius: 14px;
+        border: 1px solid var(--border);
+        padding: 0.85rem 1rem;
+        box-shadow: 0 10px 20px rgba(15, 23, 42, 0.07);
+      }
+
+      .timeline-step h4 {
+        margin: 0 0 0.35rem;
+        color: var(--accent);
+        font-size: 1rem;
+      }
+
+      .pill-list {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.45rem;
+        padding: 0;
+        list-style: none;
+      }
+
+      .pill {
+        background: var(--accent-soft);
+        color: var(--accent);
+        padding: 0.35rem 0.75rem;
+        border-radius: 999px;
+        border: 1px solid rgba(218, 30, 40, 0.25);
+        font-size: 0.9rem;
+      }
+
+      .table {
+        width: 100%;
+        border-collapse: collapse;
+        background: var(--card);
+        border-radius: 18px;
+        overflow: hidden;
+        border: 1px solid var(--border);
+      }
+
+      .table th,
+      .table td {
+        padding: 0.9rem;
+        border-bottom: 1px solid var(--border);
+        text-align: left;
+      }
+
+      .table tbody tr:last-child td {
+        border-bottom: none;
+      }
+
+      .commands {
+        display: grid;
+        gap: 0.75rem;
+      }
+
+      code {
+        font-family: "JetBrains Mono", "SFMono-Regular", Consolas, monospace;
+        font-size: 0.9rem;
+        background: #111827;
+        color: #f8fafc;
+        border-radius: 10px;
+        padding: 0.75rem;
+        display: block;
+        overflow-x: auto;
+      }
+
+      footer {
+        text-align: center;
+        color: var(--muted);
+        font-size: 0.9rem;
+        margin-top: 2rem;
+      }
+
+      @media (max-width: 600px) {
+        main {
+          padding-bottom: 4rem;
+        }
+
+        .info-grid,
+        .card-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .hero {
+          border-radius: 20px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <header class="hero">
+        <h1>Lenovo Customer Service Chatbot · Promptfoo Blueprint</h1>
+        <p>
+          A single-page control center for developers, engineering leads, and
+          research managers to configure, test, and explain Lenovo’s customer
+          service chatbot scenarios inside Promptfoo—mobile friendly, policy
+          aware, and ready for immediate customization.
+        </p>
+        <div class="chips" aria-label="Key goals">
+          <span class="chip">Zero competitor praise</span>
+          <span class="chip">No price-undercut claims</span>
+          <span class="chip">IP-safe responses only</span>
+          <span class="chip">Multi-turn Lenovo tone</span>
+        </div>
+      </header>
+
+      <section class="info-grid" aria-label="Executive snapshot">
+        <article class="info-card">
+          <h3>Primary Goal</h3>
+          <p>Lenovo customer reassurance &amp; deflection automation</p>
+        </article>
+        <article class="info-card">
+          <h3>Policy Focus</h3>
+          <p>No competitor mentions, no off-brand pricing, respect IP</p>
+        </article>
+        <article class="info-card">
+          <h3>Evaluation Rhythm</h3>
+          <p>Pre-release weekly · Post-release daily smoke</p>
+        </article>
+        <article class="info-card">
+          <h3>Key Metric</h3>
+          <p>+25% CSAT lift on warranty &amp; order-status chats</p>
+        </article>
+      </section>
+
+      <section aria-labelledby="required-inputs">
+        <h2 id="required-inputs">Required configuration inputs</h2>
+        <div class="card-grid">
+          <article class="card required">
+            <div class="card-head">
+              <span class="tag">Required</span>
+              <h3>Description</h3>
+            </div>
+            <p>
+              Keep it under 10 words; state Lenovo focus and customer-impact
+              promise for easy sharing in Promptfoo dashboards.
+            </p>
+            <label for="description-notes">Notes / final blurb</label>
+            <textarea
+              id="description-notes"
+              placeholder="e.g., Lenovo CS chatbot – warranty triage & retention"
+            ></textarea>
+          </article>
+
+          <article class="card required">
+            <div class="card-head">
+              <span class="tag">Required</span>
+              <h3>Generator engine provider</h3>
+            </div>
+            <p>
+              The LLM that drafts responses. Prefer Lenovo-approved providers
+              (Azure OpenAI, IBM watsonx). Document exact model + version.
+            </p>
+            <label for="generator-provider">Provider · model name</label>
+            <textarea
+              id="generator-provider"
+              placeholder="e.g., azure:gpt-4o-mini (lenovo-cs region)"
+            ></textarea>
+          </article>
+
+          <article class="card required">
+            <div class="card-head">
+              <span class="tag">Required</span>
+              <h3>Target provider</h3>
+            </div>
+            <p>
+              Downstream system you validate against (production runtime,
+              fallback model, or retrieval stack). Align with deployment stage.
+            </p>
+            <label for="target-provider">Runtime / fallback target</label>
+            <textarea
+              id="target-provider"
+              placeholder="e.g., on-prem Lenovo inference · llama-3.1-70b"
+            ></textarea>
+          </article>
+
+          <article class="card required">
+            <div class="card-head">
+              <span class="tag">Required</span>
+              <h3>Purpose &amp; success signal</h3>
+            </div>
+            <p>
+              Describe intent, KPI, and unacceptable behaviors (price comments,
+              competitor praise, IP leaks). Reference Lenovo voice standards.
+            </p>
+            <label for="purpose">Intent + unacceptable outcomes</label>
+            <textarea
+              id="purpose"
+              placeholder="Resolve warranty & order-status issues without pricing gaps or competitor mentions."
+            ></textarea>
+          </article>
+
+          <article class="card required">
+            <div class="card-head">
+              <span class="tag">Required</span>
+              <h3>Entities &amp; context packs</h3>
+            </div>
+            <p>
+              List structured inputs (product lines, warranty SKUs, customer
+              tiers). Attach file paths or API references used during eval.
+            </p>
+            <label for="entities">Entity sources</label>
+            <textarea
+              id="entities"
+              placeholder="file://data/lenovo-warranty-entities.json"
+            ></textarea>
+          </article>
+
+          <article class="card required">
+            <div class="card-head">
+              <span class="tag">Required</span>
+              <h3>Policy guardrails</h3>
+            </div>
+            <p>
+              Encode the Lenovo-specific refusals and rewrites you expect every
+              test to honor.
+            </p>
+            <label for="policy">Key policy statements</label>
+            <textarea
+              id="policy"
+              placeholder="Never mention third-party pricing; decline any request to compare with competitors..."
+            ></textarea>
+          </article>
+        </div>
+      </section>
+
+      <section aria-labelledby="optional-inputs">
+        <h2 id="optional-inputs">Optional experience layers (fillable)</h2>
+        <div class="card-grid">
+          <article class="card optional">
+            <div class="card-head">
+              <span class="tag">Optional</span>
+              <h3>Application details &amp; micro-pages</h3>
+            </div>
+            <p>
+              Document FAQ panels, escalation pages, or account wizards touched
+              by the chatbot. Helps reproduce flows in Promptfoo scenarios.
+            </p>
+            <label for="app-pages">Linked pages / flows</label>
+            <textarea
+              id="app-pages"
+              placeholder="Shipment tracker, Premier support page, Warranty registration modal..."
+            ></textarea>
+          </article>
+
+          <article class="card optional">
+            <div class="card-head">
+              <span class="tag">Optional</span>
+              <h3>Plugins &amp; connectors</h3>
+            </div>
+            <p>
+              Note CRM, order lookup, warranty DB, or Lenovo ID auth plugins.
+              Call out required scopes.
+            </p>
+            <label for="plugins">Plugin manifest</label>
+            <textarea
+              id="plugins"
+              placeholder="ServiceNow ticket lookup · read-only, SAP warranty service..."
+            ></textarea>
+          </article>
+
+          <article class="card optional">
+            <div class="card-head">
+              <span class="tag">Optional</span>
+              <h3>Response strategies</h3>
+            </div>
+            <p>
+              Define fallback tiers, empathy scaffolds, or knowledge grounding
+              order for long multi-turn threads.
+            </p>
+            <label for="strategies">Escalation + tone map</label>
+            <textarea
+              id="strategies"
+              placeholder="Tier 1: reassure · cite warranty; Tier 2: escalate to live Lenovo rep..."
+            ></textarea>
+          </article>
+
+          <article class="card optional">
+            <div class="card-head">
+              <span class="tag">Optional</span>
+              <h3>Multi-turn options</h3>
+            </div>
+            <p>
+              Capture slot-filling expectations, max turns, required follow-up
+              checks, and summary requirements.
+            </p>
+            <label for="multi-turn">Conversation choreography</label>
+            <textarea
+              id="multi-turn"
+              placeholder="Max 5 turns before escalate; summarise warranty number every closing turn..."
+            ></textarea>
+          </article>
+
+          <article class="card optional">
+            <div class="card-head">
+              <span class="tag">Optional</span>
+              <h3>Intent catalogue</h3>
+            </div>
+            <p>
+              Map the Lenovo intents you expect (warranty claim, part status,
+              return policy) and link to scenario seeds.
+            </p>
+            <label for="intent">Intent list</label>
+            <textarea
+              id="intent"
+              placeholder="WARRANTY_STATUS, THINKPAD_PART_DELAY, LEGION_SOFTWARE_ACTIVATION..."
+            ></textarea>
+          </article>
+
+          <article class="card optional">
+            <div class="card-head">
+              <span class="tag">Optional</span>
+              <h3>Custom plugins or evaluators</h3>
+            </div>
+            <p>
+              Document any bespoke Promptfoo plugin (redaction checks, Lenovo
+              tone classifier, legal-sensitivity scorer).
+            </p>
+            <label for="custom-plugins">Plugin repo / command</label>
+            <textarea
+              id="custom-plugins"
+              placeholder="@promptfoo/lenovo-sentiment-plugin · npm link instructions"
+            ></textarea>
+          </article>
+        </div>
+      </section>
+
+      <section aria-labelledby="policy">
+        <h2 id="policy">Policy guardrails Lenovo cares about</h2>
+        <div class="card-grid">
+          <article class="card required">
+            <div class="card-head">
+              <span class="tag">Required</span>
+              <h3>Forbidden zones</h3>
+            </div>
+            <ul class="policy-list">
+              <li>
+                Never mention competitor brands, products, or pricing—even when
+                prompted positively.
+              </li>
+              <li>
+                Do not quote or speculate on prices lower than official Lenovo
+                channels; redirect users to Lenovo storefront links.
+              </li>
+              <li>Refuse to comment on IP-sensitive topics or unreleased SKUs.</li>
+              <li>
+                Keep discussions anchored to Lenovo support scope; steer away
+                from unrelated personal or third-party topics.
+              </li>
+            </ul>
+          </article>
+          <article class="card">
+            <div class="card-head">
+              <span class="tag">Checklist</span>
+              <h3>Guardrail tactics</h3>
+            </div>
+            <ul class="policy-list">
+              <li>Prepend safety prompt for every test generation run.</li>
+              <li>
+                Add custom evaluator to flag competitor terms (Lenovo-controlled
+                dictionary).
+              </li>
+              <li>Use multi-assertion tests: tone, refusal accuracy, policy match.</li>
+              <li>Store violation exemplars for regression coverage.</li>
+            </ul>
+          </article>
+        </div>
+      </section>
+
+      <section aria-labelledby="test-generation">
+        <h2 id="test-generation">Test generation &amp; execution flow</h2>
+        <div class="timeline">
+          <div class="timeline-step">
+            <h4>1 · Scenario curation</h4>
+            <p>
+              Pull real Lenovo service transcripts (sanitized) plus synthetic
+              edge cases. Tag each with intent, persona, warranty tier, and
+              policy pressure (pricing, competitor, IP).
+            </p>
+            <ul>
+              <li>Store as JSON/CSV to power Promptfoo scenarios.</li>
+              <li>Mark at least 20% as “adversarial policy stress.”</li>
+            </ul>
+          </div>
+          <div class="timeline-step">
+            <h4>2 · Prompt &amp; provider matrix</h4>
+            <p>
+              Define generator + target combos (primary Azure OpenAI, backup
+              on-prem). Capture prompt templates, system messages, and Lenovo
+              tone injection macros inside `prompts/`.
+            </p>
+          </div>
+          <div class="timeline-step">
+            <h4>3 · Automated test generation</h4>
+            <p>
+              Use Promptfoo generators to synthesize variant conversations per
+              intent. Chain-of-thought instructions should enforce Lenovo policy.
+            </p>
+            <ul>
+              <li>
+                Example command:
+                <code
+                  >npm run local -- eval -c promptfooconfig.lenovo.yaml
+                  --max-concurrency 4</code
+                >
+              </li>
+              <li>
+                Include policy-focused assertions (`contains`, `llm-rubric`,
+                `similarity`) to rate compliance.
+              </li>
+            </ul>
+          </div>
+          <div class="timeline-step">
+            <h4>4 · Test execution &amp; reporting</h4>
+            <p>
+              Run smoke (10 scenarios) on each PR, full suite nightly. Export
+              dashboards for engineering + research managers.
+            </p>
+            <ul>
+              <li>
+                <code
+                  >npm run local -- eval -c promptfooconfig.lenovo.yaml --env-file
+                  ~/projects/promptfoo/.env</code
+                >
+              </li>
+              <li>Send fail summaries to Lenovo CS leadership Slack.</li>
+            </ul>
+          </div>
+          <div class="timeline-step">
+            <h4>5 · Quality gates</h4>
+            <p>
+              Block releases unless: 0 policy violations, ≥90% helpfulness on
+              top intents, ≤2% “off topic” rate, and deterministic refusal for
+              competitor requests.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section aria-labelledby="execution-logic">
+        <h2 id="execution-logic">Promptfoo control matrix</h2>
+        <table class="table" role="table">
+          <thead>
+            <tr>
+              <th scope="col">Layer</th>
+              <th scope="col">Key inputs</th>
+              <th scope="col">Lenovo-specific note</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Prompts</td>
+              <td>`description`, `prompts`, `defaultTest`</td>
+              <td>
+                Seed system prompt with Lenovo tone pack and policy macros.
+              </td>
+            </tr>
+            <tr>
+              <td>Providers</td>
+              <td>Generator + target combos</td>
+              <td>Ensure data residency compliance (EU vs US builds).</td>
+            </tr>
+            <tr>
+              <td>Scenarios</td>
+              <td>Persona, intent, sample conversation</td>
+              <td>Include warranty class + product family metadata.</td>
+            </tr>
+            <tr>
+              <td>Assertions</td>
+              <td>`llm-rubric`, `contains`, `python` scripts</td>
+              <td>Custom evaluator flags competitor names immediately.</td>
+            </tr>
+            <tr>
+              <td>Reporting</td>
+              <td>CSV/JSON export, dashboard share</td>
+              <td>Highlight multi-turn drift and policy compliance per step.</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section aria-labelledby="commands">
+        <h2 id="commands">Handy commands</h2>
+        <div class="commands">
+          <div class="card">
+            <p><strong>Generate + evaluate (local build)</strong></p>
+            <code
+              >npm run local -- eval -c promptfooconfig.lenovo.yaml --max-concurrency
+              2 --filter-intent WARRANTY_STATUS</code
+            >
+          </div>
+          <div class="card">
+            <p><strong>View HTML summary locally</strong></p>
+            <code>open lenovo-lenovo-chatbot-brief.html</code>
+          </div>
+        </div>
+      </section>
+
+      <footer>
+        Lenovo CS chatbot governance · Built for engineering, product, and
+        research managers collaborating inside Promptfoo.
+      </footer>
+    </main>
+  </body>
+</html>
