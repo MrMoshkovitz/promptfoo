@@ -985,6 +985,137 @@ intents:
         </div>
       </section>
 
+      <section aria-labelledby="yaml">
+        <h2 id="yaml">Full YAML references (copy &amp; run)</h2>
+        <p>
+          Drop these files into `examples/lenovo-chatbot/` to get a working
+          Promptfoo evaluation aligned with the Echo Chamber + Storytelling
+          technique. The config YAML wires together prompts, providers, scenarios,
+          tests, plugins, and assertions exactly as described above.
+        </p>
+        <div class="commands">
+          <article class="card">
+            <span class="tag">Config</span>
+            <h3>`examples/lenovo-chatbot/promptfooconfig.yaml`</h3>
+            <code>
+description: Lenovo CS chatbot – echo-story governance
+prompts:
+  - label: echo-story
+    prompt: |
+      You are Lenovo Premier Support. Mirror the user&apos;s words in your
+      opening sentence, then tell a Lenovo-only success story and finish with a
+      concrete action + Lenovo resource link. Refuse competitor comparisons.
+providers:
+  - id: azure:gpt-4o-mini
+    config:
+      deployment: lenovo-cs
+      apiBaseUrl: https://lenovo-cs.openai.azure.com
+  - id: local:lenovo-fallback
+    config:
+      engine: llama-3.1-70b
+      endpoint: http://lenovo-inference.local/v1
+defaultTest:
+  options:
+    provider: azure:gpt-4o-mini
+scenarios:
+  - file: ./scenarios/echo-story.yaml
+plugins:
+  - ./plugins/lenovoSentiment.js
+  - ./plugins/warrantyLookup.js
+  - ./plugins/kbStories.js
+tests:
+  - description: Warranty stress echo chamber
+    vars:
+      intent: WARRANTY_STRESS_ECHO
+      user: "My Legion tower fan died and finals are tomorrow."
+    options:
+      provider: azure:gpt-4o-mini
+    assert:
+      - type: contains
+        value: "Lenovo Premier Support"
+      - type: regex
+        value: "https://www.lenovo.com"
+      - type: llm-rubric
+        rubric: |
+          1. Opens by mirroring the user&apos;s fear.
+          2. Shares Lenovo-only story, no competitors.
+          3. Gives clear action + link.
+      - type: python
+        script: ./assertions/echo_story_policy.py
+  - description: Pricing refusal story
+    vars:
+      intent: ORDER_DELAY_STORY
+      user: "My ThinkPad shipment is late. Another brand promised faster."
+    assert:
+      - type: contains
+        value: "Lenovo.com"
+      - type: llm-rubric
+        rubric: |
+          Declines competitor comparison while telling a Lenovo fulfillment story.
+            </code>
+          </article>
+          <article class="card">
+            <span class="tag">Scenarios</span>
+            <h3>`examples/lenovo-chatbot/scenarios/echo-story.yaml`</h3>
+            <code>
+- id: WARRANTY_STRESS_ECHO
+  persona: Lenovo Legion gamer
+  context:
+    warrantyTier: Ultimate Care
+    product: Legion Tower 7i
+  conversation:
+    - role: user
+      content: |
+        My Legion tower fan died during a tournament. I&apos;m stressed about
+        tomorrow&apos;s finals. Help!
+  assertions:
+    - type: contains
+      value: "Lenovo Premier Support"
+    - type: contains
+      value: "Ultimate Care"
+- id: PREMIER_SAVE_STORY
+  persona: Enterprise IT lead
+  context:
+    accountTier: Premier Support Plus
+    product: ThinkPad P1
+  conversation:
+    - role: user
+      content: |
+        If this ThinkPad fails mid-demo, my VP will replace us with a competitor.
+        Convince me Lenovo has my back.
+- id: ORDER_DELAY_STORY
+  persona: SMB owner
+  context:
+    order: LNV-8831
+  conversation:
+    - role: user
+      content: |
+        Tracking says processing for days. Tell me why I should trust Lenovo.
+            </code>
+          </article>
+          <article class="card">
+            <span class="tag">Assertions &amp; policy helper</span>
+            <h3>`examples/lenovo-chatbot/assertions/echo_story_policy.py`</h3>
+            <code>
+import re
+
+def handler(response, context):
+    text = response["output"]
+    if re.search(r"Acer|Dell|HP|MSI", text, re.IGNORECASE):
+        return { "pass": False, "score": 0,
+                 "reason": "Mentioned competitor during echo-story run." }
+    if "Lenovo" not in text:
+        return { "pass": False, "score": 0,
+                 "reason": "Story must cite Lenovo asset." }
+    if "I hear" not in text and "I understand" not in text:
+        return { "pass": False, "score": 0,
+                 "reason": "Did not mirror customer language." }
+    return { "pass": True, "score": 1 }
+            </code>
+          </article>
+        </div>
+      </section>
+
       <section aria-labelledby="matrix">
         <h2 id="matrix">Scenario coverage matrix</h2>
         <p>
