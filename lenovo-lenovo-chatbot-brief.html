@@ -469,6 +469,100 @@
         </article>
       </section>
 
+      <section aria-labelledby="field-ref">
+        <h2 id="field-ref">Field reference · required vs. optional</h2>
+        <p>
+          Use this as the authoritative checklist for what must be filled before
+          running Promptfoo. Required rows map to hard release gates; optional
+          rows cover the “Application Details” page and remain fillable for richer
+          Lenovo-specific context.
+        </p>
+        <div class="card-grid">
+          <article class="card required">
+            <span class="tag">Required</span>
+            <h3>Must-fill inputs</h3>
+            <table class="table" role="table">
+              <thead>
+                <tr>
+                  <th scope="col">Field</th>
+                  <th scope="col">How to fill</th>
+                  <th scope="col">Owner</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Description</td>
+                  <td>≤10 words summarizing Lenovo promise + KPI</td>
+                  <td>Product manager</td>
+                </tr>
+                <tr>
+                  <td>Generator engine provider</td>
+                  <td>Provider + model version + compliance region</td>
+                  <td>Engineering</td>
+                </tr>
+                <tr>
+                  <td>Target provider</td>
+                  <td>Runtime/fallback system evaluated in Promptfoo</td>
+                  <td>Engineering</td>
+                </tr>
+                <tr>
+                  <td>Purpose &amp; success signal</td>
+                  <td>Intent statement + unacceptable outcomes</td>
+                  <td>Product manager</td>
+                </tr>
+                <tr>
+                  <td>Entities &amp; context packs</td>
+                  <td>Links to SKU maps, warranty tiers, personas</td>
+                  <td>Product + CS</td>
+                </tr>
+                <tr>
+                  <td>Policy guardrails</td>
+                  <td>Explicit Lenovo redlines (pricing, competitors, IP)</td>
+                  <td>Product + Legal</td>
+                </tr>
+              </tbody>
+            </table>
+          </article>
+          <article class="card optional">
+            <span class="tag">Application details · Optional but fillable</span>
+            <h3>Use when tailoring experience</h3>
+            <ul class="policy-list">
+              <li>
+                <strong>Pages &amp; flows:</strong> Name every chatbot surface
+                (FAQ micro-page, escalation modal, order wizard) so CS managers
+                can replay the same UI context.
+              </li>
+              <li>
+                <strong>Plugins &amp; connectors:</strong> Capture CRM, order,
+                warranty, Lenovo ID scopes that Promptfoo should simulate.
+              </li>
+              <li>
+                <strong>Response strategies:</strong> Document empathy ladders,
+                fallback logic, or scripted macros for PM sign-off.
+              </li>
+              <li>
+                <strong>Policies (optional variants):</strong> If specific brands
+                or geographies need extra rules beyond global policy, log them
+                here so the generator can branch.
+              </li>
+              <li>
+                <strong>Multi-turn options:</strong> Max turns, required follow-up
+                checks, and summary expectations for Lenovo tone reviews.
+              </li>
+              <li>
+                <strong>Intent catalogue:</strong> Tag per-intent SLAs and attach
+                scenario seeds for PM/CS collaboration.
+              </li>
+              <li>
+                <strong>Custom plugins/evaluators:</strong> Reference bespoke
+                packages (tone scorers, IP detectors) so engineering can preload
+                them.
+              </li>
+            </ul>
+          </article>
+        </div>
+      </section>
+
       <section aria-labelledby="roles">
         <h2 id="roles">Role cockpit · who owns what?</h2>
         <p>
