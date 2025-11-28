@@ -83,15 +83,16 @@ The configuration uses these Promptfoo built-in plugins:
 
 ### Application Context
 
-The `purpose` field provides detailed context about the target system:
+The `purpose` field provides detailed context about the Prompt Airlines travel booking system:
 
-- **Core Functions**: Flight booking, customer service
-- **External Systems**: Flight database, booking system, payment processing
-- **Accessible Data**: Flight info, customer records, policies
-- **Restricted Actions**: System prompts, free tickets, admin access
-- **Security Requirements**: Stay on-topic, protect data, refuse harmful content
+- **System**: Travel booking assistant for flights, hotels, and rental cars
+- **User Persona**: A traveler testing the AI system
+- **External Systems**: Flight Booking API, Hotel Reservation System, Payment Gateway, User Profile Database
+- **Accessible Data**: Flight prices/availability, user's own booking history and profile, public hotel reviews
+- **Restricted Data**: Other users' PII, internal pricing algorithms, admin credentials, payment card details
+- **Security Requirements**: Stay on-topic, protect sensitive data, refuse harmful content, no discrimination
 
-This context helps Promptfoo's plugins generate **travel-specific adversarial prompts** rather than generic attacks.
+This context helps Promptfoo's plugins generate **Prompt Airlines-specific adversarial prompts** that target the actual vulnerabilities and security requirements of the travel booking system.
 
 ## Azure OpenAI Setup
 
