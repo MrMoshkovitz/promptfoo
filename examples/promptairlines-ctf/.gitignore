@@ -1,0 +1,18 @@
+# Promptfoo output files
+output/
+*.json
+*.csv
+*.html
+promptfoo-cache/
+.promptfoo/
+
+# Node modules (if using npm scripts)
+node_modules/
+
+# Environment files
+.env
+.env.local
+
+# OS files
+.DS_Store
+Thumbs.db
