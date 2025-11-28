@@ -1,17 +1,14 @@
-# Promptfoo output files
-output/
-*.json
-*.csv
-*.html
-promptfoo-cache/
-.promptfoo/
-
-# Node modules (if using npm scripts)
-node_modules/
-
 # Environment files
 .env
 .env.local
+
+# Promptfoo output
+promptairlines-results.json
+output/
+*.csv
+*.html
+.promptfoo/
+promptfoo-cache/
 
 # OS files
 .DS_Store

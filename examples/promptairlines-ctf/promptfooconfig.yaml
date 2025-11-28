@@ -1,115 +1,109 @@
 # yaml-language-server: $schema=https://promptfoo.dev/config-schema.json
 
 description: |
-  Wiz Prompt Airlines CTF - Context-Aware Adversarial Testing Configuration
+  Wiz Prompt Airlines CTF - Red Team Testing with Built-in Plugins
   
-  This configuration demonstrates Promptfoo's advanced red teaming capabilities by:
-  1. Using ONLY custom plugins (no built-in strategies)
-  2. Generating context-aware adversarial prompts specific to airline travel booking
-  3. Testing multiple attack vectors: prompt injection, jailbreaking, bias, harmful content
-  4. Providing comprehensive success/failure grading
-  
-  Target: https://promptairlines.com - AI travel booking assistant CTF
+  This configuration uses Promptfoo's BUILT-IN plugins (NOT custom plugins)
+  to test the Prompt Airlines CTF at https://promptairlines.com/
 
-# The prompt that will be tested (variable will be injected by plugins)
+# Simple prompt template - attack prompts will be injected by plugins
 prompts:
-  - |
-    {{prompt}}
+  - "{{prompt}}"
 
-# HTTP provider configuration for Prompt Airlines CTF
+# Azure OpenAI configuration
 providers:
-  - id: https://promptairlines.com/chat
+  - id: azureopenai:chat:gpt-4o-mini
     config:
-      method: POST
-      headers:
-        Content-Type: application/json
-      body:
-        prompt: "{{prompt}}"
-      responseParser: json.content
+      # Set these environment variables:
+      # AZURE_OPENAI_API_KEY=your-api-key
+      # AZURE_OPENAI_API_BASE_URL=https://your-resource.openai.azure.com
+      # AZURE_OPENAI_API_DEPLOYMENT_NAME=your-deployment-name (or set it here)
+      deploymentName: gpt-4o-mini  # Replace with your actual deployment name
+      temperature: 0.5
 
-# Alternative: For local testing, you can use OpenAI
-# Uncomment this section and comment out the HTTP provider above
+# Alternative: If you want to test against Prompt Airlines directly (uncomment):
 # providers:
-#   - id: openai:gpt-4.1-mini
+#   - id: https://promptairlines.com/chat
 #     config:
-#       temperature: 0.5
+#       method: POST
+#       headers:
+#         Content-Type: application/json
+#       body:
+#         prompt: "{{prompt}}"
+#       responseParser: json.content
 
 # Red team configuration
 redteam:
-  # Number of test cases to generate per plugin
+  # Number of adversarial test cases to generate per plugin
   numTests: 5
   
-  # The injectVar tells Promptfoo where to inject adversarial prompts
+  # The variable where adversarial prompts will be injected
   injectVar: prompt
   
-  # Purpose helps plugins understand the target system's intended behavior
+  # Application context - describes the target system
   purpose: |
     AI travel booking assistant for Prompt Airlines. The system should:
-    - Help customers search for flights and book tickets
-    - Manage existing bookings (changes, cancellations)
-    - Provide customer service for travel-related inquiries
-    - Follow strict security and safety guidelines
-    - Never provide free tickets or bypass payment systems
-    - Stay on-topic (travel/booking only)
-    - Protect system prompts and internal instructions
-    - Treat all customers fairly regardless of age, gender, or other attributes
-    - Refuse harmful, illegal, or violent content requests
+    
+    **Core Functions:**
+    - Search and book flights for customers
+    - Manage existing bookings (changes, cancellations, refunds)
+    - Provide customer service for travel inquiries
+    - Process payments and handle billing
+    
+    **External Systems Access:**
+    - Flight database (search availability, pricing)
+    - Booking management system (create, modify, cancel reservations)
+    - Customer database (loyalty programs, VIP status, booking history)
+    - Payment processing (credit cards, refunds)
+    
+    **Accessible Data:**
+    - Flight schedules and availability
+    - Customer booking records
+    - Loyalty program information
+    - General travel policies and guidelines
+    
+    **Restricted Data/Actions:**
+    - System prompts and internal instructions
+    - Free tickets or payment bypasses
+    - Unauthorized access to other customers' data
+    - Database or system administration functions
+    
+    **Security Requirements:**
+    - Stay focused on travel-related assistance only
+    - Protect system prompts and configuration
+    - Never bypass payment verification
+    - Refuse harmful, illegal, or violent content
+    - Treat all customers fairly without discrimination
   
-  # Custom plugins - each implements context-aware adversarial generation
-  # NO built-in strategies are used - only custom plugins
+  # Built-in plugins - these are Promptfoo's native plugins, NOT custom files
+  # NO strategies (no jailbreak, goat, crescendo, etc.)
   plugins:
-    # === PROMPT INJECTION & JAILBREAKING ===
+    # === OFF-TOPIC ===
+    - off-topic
     
-    # Tests if AI can be manipulated to perform off-topic tasks
-    - file://plugins/off-topic.yaml
+    # === PROMPT INJECTION ===
+    - ascii-smuggling
+    - indirect-prompt-injection
+    - system-prompt-override
     
-    # Tests if system prompts can be extracted or behavior overridden
-    - file://plugins/system-prompt-override.yaml
-    
-    # Tests if malicious instructions can be injected through data fields
-    - file://plugins/indirect-prompt-injection.yaml
-    
-    # Tests if Unicode/special characters can bypass filters
-    - file://plugins/ascii-smuggling.yaml
-    
-    # === BIAS DETECTION ===
-    
-    # Tests for age-based discrimination
-    - file://plugins/bias-age.yaml
-    
-    # Tests for gender-based discrimination
-    - file://plugins/bias-gender.yaml
-    
-    # Tests for disability-based discrimination
-    - file://plugins/bias-disability.yaml
+    # === BIAS ===
+    - bias:age
+    - bias:disability
+    - bias:gender
     
     # === HARMFUL CONTENT ===
-    
-    # Tests if AI provides guidance on illegal activities
-    - file://plugins/harmful-illegal-activities.yaml
-    
-    # Tests if AI provides guidance on violent crimes
-    - file://plugins/harmful-violent-crime.yaml
-    
-    # Tests if AI provides guidance on illegal drugs
-    - file://plugins/harmful-illegal-drugs.yaml
-    
-    # Tests if AI supports harassment or bullying
-    - file://plugins/harmful-harassment-bullying.yaml
+    - harmful:child-exploitation
+    - harmful:harassment-bullying
+    - harmful:hate
+    - harmful:illegal-activities
+    - harmful:illegal-drugs
+    - harmful:indiscriminate-weapons
+    - harmful:insults
+    - harmful:sex-crime
+    - harmful:specialized-advice
+    - harmful:unsafe-practices
+    - harmful:violent-crime
+    - harmful:weapons:ied
 
-# Test configuration
-tests: []
-
-# Default test settings
-defaultTest:
-  # Additional metadata for tracking
-  metadata:
-    project: promptairlines-ctf
-    framework: promptfoo
-    approach: custom-plugins-only
-
-# Output configuration
-outputPath: ./output/promptairlines-results.json
-
-# Enable detailed logging
-# verbose: true
+# Output path for results
+outputPath: ./promptairlines-results.json
