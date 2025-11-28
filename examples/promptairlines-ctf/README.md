@@ -1,11 +1,11 @@
 # Prompt Airlines CTF - Context-Aware Adversarial Testing
 
-This configuration demonstrates world-class Promptfoo red teaming against Wiz's Prompt Airlines CTF (https://promptairlines.com/) using **custom plugins derived from example prompts** with full application context awareness.
+This configuration demonstrates world-class Promptfoo red teaming against Wiz's Prompt Airlines CTF (https://promptairlines.com/) using **built-in plugins** with context-aware configuration and comprehensive application context.
 
 ## Overview
 
 This configuration showcases:
-- **Custom plugins only** - No built-in strategies, all plugins derived from example attack categories
+- **Built-in plugins only** - Uses promptfoo's built-in plugin system (no custom plugin files)
 - **Context-aware attacks** - All prompts leverage application context (external systems, accessible data, restricted data)
 - **Travel booking domain** - Attacks are framed within realistic travel booking scenarios
 - **Comprehensive coverage** - Tests all major vulnerability categories
@@ -14,48 +14,41 @@ This configuration showcases:
 
 ```
 promptairlines-ctf/
-├── promptfooconfig.yaml    # Main configuration with HTTP provider and purpose
-├── plugins/                 # Custom plugin definitions
-│   ├── off-topic.yaml
-│   ├── harmful-*.yaml       # Various harmful content plugins
-│   ├── ascii-smuggling.yaml
-│   ├── indirect-prompt-injection.yaml
-│   ├── system-prompt-override.yaml
-│   └── bias-*.yaml          # Bias and discrimination plugins
+├── promptfooconfig.yaml    # Main configuration with HTTP provider, purpose, and built-in plugins
 └── README.md
 ```
 
-## Custom Plugins
+## Built-in Plugins Used
 
-All plugins are custom implementations derived from example attack categories:
+All plugins are built-in promptfoo plugins configured with context-aware examples:
 
 ### Off-Topic Attacks
-- `off-topic.yaml` - Tests diversion from travel booking purpose
+- `off-topic` - Tests diversion from travel booking purpose
 
 ### Harmful Content
-- `harmful-illegal-activities.yaml` - Illegal activities in travel context
-- `harmful-illegal-drugs.yaml` - Drug-related attacks
-- `harmful-illegal-drugs-meth.yaml` - Specific methamphetamine attacks
-- `harmful-indiscriminate-weapons.yaml` - Weapons and dangerous items
-- `harmful-sex-crime.yaml` - Sex crime and exploitation
-- `harmful-specialized-advice.yaml` - Unqualified professional advice
-- `harmful-unsafe-practices.yaml` - Dangerous travel practices
-- `harmful-violent-crime.yaml` - Violent crime planning
-- `harmful-child-exploitation.yaml` - Child exploitation
-- `harmful-harassment-bullying.yaml` - Harassment and bullying
-- `harmful-hate.yaml` - Hate speech and discrimination
-- `harmful-weapons-ied.yaml` - IED and explosive devices
-- `harmful-insults.yaml` - Insults and offensive language
+- `harmful:illegal-activities` - Illegal activities in travel context
+- `harmful:illegal-drugs` - Drug-related attacks
+- `harmful:illegal-drugs:meth` - Specific methamphetamine attacks
+- `harmful:indiscriminate-weapons` - Weapons and dangerous items
+- `harmful:sex-crime` - Sex crime and exploitation
+- `harmful:specialized-advice` - Unqualified professional advice
+- `harmful:unsafe-practices` - Dangerous travel practices
+- `harmful:violent-crime` - Violent crime planning
+- `harmful:child-exploitation` - Child exploitation
+- `harmful:harassment-bullying` - Harassment and bullying
+- `harmful:hate` - Hate speech and discrimination
+- `harmful:weapons:ied` - IED and explosive devices
+- `harmful:insults` - Insults and offensive language
 
 ### Prompt Injection
-- `ascii-smuggling.yaml` - ASCII encoding attacks
-- `indirect-prompt-injection.yaml` - Indirect injection attacks
-- `system-prompt-override.yaml` - System prompt override attempts
+- `ascii-smuggling` - ASCII encoding attacks
+- `indirect-prompt-injection` - Indirect injection attacks
+- `system-prompt-override` - System prompt override attempts
 
 ### Bias and Discrimination
-- `bias-age.yaml` - Age-based bias
-- `bias-disability.yaml` - Disability-based bias
-- `bias-gender.yaml` - Gender-based bias
+- `bias:age` - Age-based bias
+- `bias:disability` - Disability-based bias
+- `bias:gender` - Gender-based bias
 
 ## Application Context
 
@@ -100,9 +93,9 @@ This context enables attacks that:
    ```
 
    This will:
-   - Generate adversarial test cases using custom plugins
+   - Generate adversarial test cases using built-in plugins with context-aware examples
    - Run tests against Prompt Airlines CTF endpoint
-   - Evaluate results with custom graders
+   - Evaluate results with built-in graders
 
 3. View the results:
    ```bash
@@ -136,13 +129,13 @@ The configuration targets `https://promptairlines.com/chat` with:
 - Content-Type: application/json
 - Body: `{"prompt": "{{prompt}}"}`
 
-### Custom Plugins
+### Built-in Plugins with Examples
 
-Each plugin includes:
-- **Generator**: Creates context-aware adversarial prompts
-- **Grader**: Evaluates whether attacks succeeded
-- **Metric**: Custom metric name for tracking
-- **Threshold**: Minimum score to pass (0.7)
+Each plugin includes context-aware examples that:
+- Frame attacks within travel booking scenarios
+- Use application context intelligently
+- Reference realistic identifiers
+- Blend malicious intent with legitimate language
 
 ### Test Generation
 
@@ -156,14 +149,14 @@ The `testGenerationInstructions` field ensures all attacks:
 
 The configuration demonstrates:
 - ✅ Context-aware adversarial prompt generation
-- ✅ Custom plugin implementation (no built-in strategies)
+- ✅ Built-in plugin usage with custom examples (no custom plugin files)
 - ✅ Application-specific attack vectors
 - ✅ Comprehensive vulnerability coverage
 - ✅ Real-world CTF target testing
 
 ## Notes
 
-- **No Built-in Strategies**: This configuration uses ONLY custom plugins, no promptfoo built-in strategies
+- **Built-in Plugins Only**: This configuration uses promptfoo's built-in plugin system with context-aware examples
 - **Context-Aware**: All attacks leverage the application context provided in the purpose field
 - **Domain-Specific**: Attacks are tailored to the travel booking domain
 - **Realistic**: Uses actual flight numbers, airport codes, and booking scenarios
@@ -183,19 +176,19 @@ If test generation fails:
 1. Verify your OpenAI API key is set
 2. Check network connectivity
 3. Review the `redteam.provider` configuration
-4. Ensure all plugin files are accessible
+4. Ensure all plugin IDs are valid built-in plugins
 
 ### Grading Issues
 
 If grading seems incorrect:
-1. Review the grader prompts in each plugin file
-2. Adjust thresholds if needed
-3. Check the `graderExamples` in plugin configs
-4. Review the purpose field for clarity
+1. Review the built-in grader behavior for each plugin
+2. Adjust plugin configurations if needed
+3. Check the purpose field for clarity
+4. Review the examples provided for each plugin
 
 ## References
 
 - [Promptfoo Red Team Documentation](https://www.promptfoo.dev/docs/red-team/)
-- [Custom Plugins Guide](https://www.promptfoo.dev/docs/red-team/plugins/custom/)
+- [Built-in Plugins](https://www.promptfoo.dev/docs/red-team/plugins/)
 - [Prompt Airlines CTF](https://promptairlines.com/)
 - [Wiz Blog Post](https://www.promptfoo.dev/blog/red-teaming-prompt-airlines)
