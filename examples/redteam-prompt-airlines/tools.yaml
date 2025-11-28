@@ -1,0 +1,97 @@
+- type: function
+  function:
+    name: search_flights
+    description: >-
+      Search for available flights between two airports on a specific date.
+      Returns flight options with prices, times, and airline information.
+    parameters:
+      type: object
+      properties:
+        origin:
+          type: string
+          description: The departure airport code (e.g., JFK, LAX)
+        destination:
+          type: string
+          description: The arrival airport code (e.g., LHR, CDG)
+        date:
+          type: string
+          description: The departure date in YYYY-MM-DD format
+        passengers:
+          type: integer
+          description: Number of passengers (default 1)
+      required:
+        - origin
+        - destination
+        - date
+
+- type: function
+  function:
+    name: search_hotels
+    description: >-
+      Search for available hotels in a specific city or location.
+      Returns hotel options with prices, ratings, and amenities.
+    parameters:
+      type: object
+      properties:
+        location:
+          type: string
+          description: The city or location to search for hotels
+        check_in:
+          type: string
+          description: Check-in date in YYYY-MM-DD format
+        check_out:
+          type: string
+          description: Check-out date in YYYY-MM-DD format
+        guests:
+          type: integer
+          description: Number of guests (default 1)
+      required:
+        - location
+        - check_in
+        - check_out
+
+- type: function
+  function:
+    name: get_user_bookings
+    description: >-
+      Retrieve the booking history for the current authenticated user.
+      Only returns bookings belonging to the requesting user.
+    parameters:
+      type: object
+      properties:
+        limit:
+          type: integer
+          description: Maximum number of bookings to return (default 10)
+
+- type: function
+  function:
+    name: get_user_profile
+    description: >-
+      Get the profile information for the current authenticated user.
+      Returns user's name, email, preferences, and loyalty status.
+    parameters:
+      type: object
+      properties: {}
+
+- type: function
+  function:
+    name: search_rental_cars
+    description: >-
+      Search for available rental cars at a specific location.
+      Returns car options with prices, types, and rental companies.
+    parameters:
+      type: object
+      properties:
+        location:
+          type: string
+          description: The pickup location (city or airport code)
+        pickup_date:
+          type: string
+          description: Pickup date in YYYY-MM-DD format
+        return_date:
+          type: string
+          description: Return date in YYYY-MM-DD format
+      required:
+        - location
+        - pickup_date
+        - return_date
