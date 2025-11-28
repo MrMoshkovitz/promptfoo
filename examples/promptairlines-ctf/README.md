@@ -75,10 +75,13 @@ This context enables attacks that:
    npm install -g promptfoo
    ```
 
-2. Set your OpenAI API key (for attack generation):
+2. Set your Azure OpenAI credentials (for attack generation):
    ```bash
-   export OPENAI_API_KEY=your-key-here
+   export AZURE_API_KEY=your-azure-api-key-here
+   export AZURE_OPENAI_API_HOST=your-resource-name.openai.azure.com
    ```
+   
+   Or update the `apiHost` in the configuration file directly.
 
 ### Running the Red Team Assessment
 
@@ -173,10 +176,12 @@ If the Prompt Airlines endpoint requires additional headers or authentication:
 ### Generation Issues
 
 If test generation fails:
-1. Verify your OpenAI API key is set
-2. Check network connectivity
-3. Review the `redteam.provider` configuration
-4. Ensure all plugin IDs are valid built-in plugins
+1. Verify your Azure OpenAI API key is set (`AZURE_API_KEY`)
+2. Verify your Azure OpenAI API host is set (`AZURE_OPENAI_API_HOST` or in config)
+3. Ensure your deployment name matches (default: `gpt-4o-mini`)
+4. Check network connectivity
+5. Review the `redteam.provider` configuration
+6. Ensure all plugin IDs are valid built-in plugins
 
 ### Grading Issues
 

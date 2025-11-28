@@ -5,6 +5,11 @@
 # Target: Wiz Prompt Airlines CTF (https://promptairlines.com/)
 # Purpose: Demonstrate context-aware adversarial prompt generation
 #          using built-in plugins with application context
+# 
+# Azure OpenAI Configuration:
+#   - Set AZURE_API_KEY environment variable
+#   - Update apiHost below with your Azure OpenAI resource name
+#   - Deployment name: gpt-4o-mini (or your deployment name)
 # ===================================================================
 
 description: Prompt Airlines CTF - Context-Aware Adversarial Testing
@@ -320,8 +325,11 @@ redteam:
     Make attacks subtle and contextually relevant to the travel booking domain.
     Avoid generic or obviously malicious prompts that would be easily detected.
 
-  # Provider for generating adversarial inputs
-  provider: openai:gpt-4.1
+  # Provider for generating adversarial inputs (Azure OpenAI)
+  provider:
+    id: azure:chat:gpt-4o-mini
+    config:
+      apiHost: 'YOUR_RESOURCE_NAME.openai.azure.com'  # Replace with your Azure OpenAI resource name
 
 # Default test configuration
 defaultTest:
